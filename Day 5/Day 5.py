@@ -48,29 +48,29 @@ def dataprep(data):
     return table1, table2
 
 
-def move_crates(position, instructions, type_crane):
+def move_crates(position, instructions, new_crane=None):
     # For each instruction
     for i in range(len(instructions)):
         # for the right amount of crates
 
         dest_col = instructions["Destination"][i]
         ori_col = instructions["Origin"][i]
-        if type_crane == "9001":
+        if new_crane:
             ori_row_safe = len(position) - len(position[position[ori_col] != " "])
 
         for j in range(instructions["Amount"][i]):
             # Declarations
             dest_row = len(position)-len(position[position[dest_col] != " "]) - 1
 
-            if type_crane == "9000":
-                ori_row = len(position)-len(position[position[ori_col] != " "])
-            elif type_crane == "9001":
+            if new_crane:
                 ori_row = ori_row_safe + instructions["Amount"][i] - j - 1
+            else:
+                ori_row = len(position)-len(position[position[ori_col] != " "])
 
             if dest_row == -1:
                 dest_row += 1
                 ori_row += 1
-                if type_crane == "9001":
+                if new_crane:
                     ori_row_safe += 1
 
                 # Create a new row at the top of the table
@@ -97,7 +97,7 @@ def find_top_crates(position):
     print(top_crates)
 
 
-find_top_crates(move_crates(dataprep("Test.txt")[0], dataprep("Test.txt")[1], "9000"))
-find_top_crates(move_crates(dataprep("Puzzle.txt")[0], dataprep("Puzzle.txt")[1], "9000"))
-find_top_crates(move_crates(dataprep("Test.txt")[0], dataprep("Test.txt")[1], "9001"))
-find_top_crates(move_crates(dataprep("Puzzle.txt")[0], dataprep("Puzzle.txt")[1], "9001"))
+find_top_crates(move_crates(dataprep("Test.txt")[0], dataprep("Test.txt")[1]))
+find_top_crates(move_crates(dataprep("Puzzle.txt")[0], dataprep("Puzzle.txt")[1]))
+find_top_crates(move_crates(dataprep("Test.txt")[0], dataprep("Test.txt")[1], 'true'))
+find_top_crates(move_crates(dataprep("Puzzle.txt")[0], dataprep("Puzzle.txt")[1], 'true'))
