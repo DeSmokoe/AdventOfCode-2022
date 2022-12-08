@@ -1,8 +1,8 @@
 import numpy as np
 
 def readfile(filename):
-    input_file = open(filename, "r")
-    return input_file.read()
+    with open(filename, "r") as f:
+        return f.read()
 
 
 def dataprep(data):

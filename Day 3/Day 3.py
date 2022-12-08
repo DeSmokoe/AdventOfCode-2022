@@ -1,12 +1,12 @@
 import numpy as np
 
-def readfile(filename):
-    input_file = open(filename, "r")
-    return input_file.read()
+def read_input(filename):
+    with open(filename, "r") as f:
+        return f.read()
 
 
 def dataprep_general(data):
-    my_file = readfile(data)
+    my_file = read_input(data)
     array = my_file.split("\n")
     array = np.array(array)
 
