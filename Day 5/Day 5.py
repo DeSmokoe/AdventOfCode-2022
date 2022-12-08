@@ -48,25 +48,46 @@ def dataprep(data):
     return table1, table2
 
 
-def move_crates(position, instructions):
-
+def move_crates_9000(position, instructions):
     for i in range(len(instructions)):
         for j in range(instructions["Amount"][i]):
-
-
             dest_col = instructions["Destination"][i]
             ori_col = instructions["Origin"][i]
 
-
             dest_row = len(position)-len(position[position[dest_col] != " "]) - 1
             ori_row = len(position)-len(position[position[ori_col] != " "])
+
+            if dest_row == -1:
+                dest_row = 0
+                ori_row += 1
+
+                # Create a new row at the top of the table
+                position.loc[-1] = [" "] * len(position.columns)
+                position.index = position.index + 1
+                position = position.sort_index()
 
             position[dest_col][dest_row] = \
                 position[ori_col][ori_row]
 
             position[ori_col][ori_row] = " "
-            print(position)
+
+    return position
 
 
+def move_crates_9001(position, instructions):
+    pass
 
-move_crates(dataprep("Test.txt")[0], dataprep("Test.txt")[1])
+
+def find_top_crates(position):
+
+    # find the first not empty characters in the top of each column
+    top_crates = position.apply(lambda x: x[x != " "].iloc[0], axis=0)
+
+    # write the characters in a string
+    top_crates = "".join(top_crates)
+
+    print(top_crates)
+
+
+find_top_crates(move_crates_9000(dataprep("Test.txt")[0], dataprep("Test.txt")[1]))
+find_top_crates(move_crates_9000(dataprep("Puzzle.txt")[0], dataprep("Puzzle.txt")[1]))
