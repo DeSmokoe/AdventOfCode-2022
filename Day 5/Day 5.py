@@ -97,7 +97,7 @@ def find_top_crates(position):
     print(top_crates)
 
 
-# find_top_crates(move_crates(dataprep("Test.txt")[0], dataprep("Test.txt")[1], "9000"))
-# find_top_crates(move_crates(dataprep("Puzzle.txt")[0], dataprep("Puzzle.txt")[1], "9000"))
-# find_top_crates(move_crates(dataprep("Test.txt")[0], dataprep("Test.txt")[1], "9001"))
+find_top_crates(move_crates(dataprep("Test.txt")[0], dataprep("Test.txt")[1], "9000"))
+find_top_crates(move_crates(dataprep("Puzzle.txt")[0], dataprep("Puzzle.txt")[1], "9000"))
+find_top_crates(move_crates(dataprep("Test.txt")[0], dataprep("Test.txt")[1], "9001"))
 find_top_crates(move_crates(dataprep("Puzzle.txt")[0], dataprep("Puzzle.txt")[1], "9001"))
