@@ -1,6 +1,25 @@
 import pandas as pd
 import numpy as np
 
+# Create a DirectoryNode class
+class DirectoryNode:
+    def __init__(self, name):
+        self.name = name
+        self.children = []
+        self.parent = None
+
+    def add_child(self, child):
+        self.children.append(child)
+
+    def get_children(self):
+        return self.children
+
+    def get_parent(self):
+        return self.parent
+
+    def set_parent(self, parent):
+        self.parent = parent
+
 
 def readfile(puzzle=False):
     if puzzle:
@@ -62,6 +81,10 @@ def change_directory(line, fs, cd):
     if line == "..":
         pass
     else:
+        # add line as a child object to the root
+        root.add_child(DirectoryNode(line))
+
+
         # create a new column in the dataframe and fill it with nans
         fs[line] = np.nan
         cd = line
@@ -98,8 +121,15 @@ def calculate_total(sizes):
     # calculate the sum of all the ints smaller than 100000
     total = sum([x for x in sizes if x < 100000])
 
+    # get children of root and print their names
+    children = root.get_children()
+    for child in children:
+        print(child.name)
+
     print(total)
 
 
+root = DirectoryNode("root")
+
 calculate_total(calculate_folder(data_prep()))
-calculate_total(calculate_folder(data_prep(puzzle=True)))
+# calculate_total(calculate_folder(data_prep(puzzle=True)))
