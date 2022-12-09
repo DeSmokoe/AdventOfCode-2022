@@ -1,6 +1,5 @@
 import pandas as pd
 
-
 def readfile(puzzle=False):
     if puzzle:
         filename = "Puzzle.txt"
@@ -8,7 +7,6 @@ def readfile(puzzle=False):
         filename = "Test.txt"
     with open(filename, "r") as f:
         return f.read()
-
 
 def data_prep(puzzle=False):
 
@@ -27,9 +25,7 @@ def data_prep(puzzle=False):
 
     return data
 
-
 def locate_highest_trees(puzzle=False):
-
     data = data_prep(puzzle)
 
     # create a copy of the dataframe filled with 0
@@ -44,7 +40,6 @@ def locate_highest_trees(puzzle=False):
 
     amount = trees.sum().sum()
     print(amount)
-
 
 def calculate_scenic_score(puzzle=False):
 
@@ -99,12 +94,11 @@ def calculate_scenic_score(puzzle=False):
     print(scenic_scores.max().max())
 
 
+locate_highest_trees()
+locate_highest_trees(True)
 
-
-
+calculate_scenic_score()
 calculate_scenic_score(True)
 
 
 
-# locate_highest_trees()
-# locate_highest_trees(True)
