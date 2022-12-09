@@ -87,13 +87,16 @@ def calculate_folder(fs):
             if isinstance(fs.iloc[i, j], str) and not fs.iloc[i, j].isdigit():
                 sizes.iloc[0, j] += sizes.iloc[0, fs.columns.get_loc(fs.iloc[i, j])]
 
+    # turn the sizes into integers and put them in a list
+    sizes = sizes.astype(int).values.tolist()[0]
+
     return sizes
 
 
 def calculate_total(sizes):
 
-    # calculate the sum of all the sizes smaller than 100000
-    total = sizes[sizes <= 100000].sum().sum()
+    # calculate the sum of all the ints smaller than 100000
+    total = sum([x for x in sizes if x < 100000])
 
     print(total)
 
