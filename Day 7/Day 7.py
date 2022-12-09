@@ -11,8 +11,8 @@ def readfile(puzzle=False):
         return f.read()
 
 
-def data_prep():
-    terminal_output = readfile().splitlines()
+def data_prep(puzzle=False):
+    terminal_output = readfile(puzzle).splitlines()
     fs = pd.DataFrame({"Remove": [1]})  # File Structure
     cd = ""  # Current Directory
 
@@ -40,9 +40,8 @@ def command(output_line, fs, cd):
 
 
 def save_file(line, fs, cd):
-    # keep only the digits in line and turn them into ints
-    line = int("".join([x for x in line if x.isdigit()]))
-
+    # Keep only the digits in the line
+    line = "".join([x for x in line if x.isdigit()])
 
     if fs[cd].isnull().sum() == 0:
         # create a new row empty row
@@ -72,23 +71,32 @@ def change_directory(line, fs, cd):
 def list_content():
     pass
 
-def calculate_sizes(fs):
-    # create a new datafram with the same columns as fs and fill it with 1 row of zeros
+def calculate_folder(fs):
+    # create a new dataframe with the same columns as fs and fill it with 1 row of zeros
     sizes = pd.DataFrame(np.zeros((1, len(fs.columns))), columns=fs.columns)
 
     for i in range(len(fs)):
         for j in range(len(fs.columns)):
             # if the cell contains a number add it to the size of the column
-            if isinstance(fs.iloc[i, j], int):
-                sizes.iloc[0, j] += fs.iloc[i, j]
+            if isinstance(fs.iloc[i, j], str) and fs.iloc[i, j].isdigit():
+                sizes.iloc[0, j] += int(fs.iloc[i, j])
+
+    for i in range(len(fs)):
+        for j in range(len(fs.columns)-1, -1, -1):
+            # if the cell contains a string add the size of the column corresponding to the string
+            if isinstance(fs.iloc[i, j], str) and not fs.iloc[i, j].isdigit():
+                sizes.iloc[0, j] += sizes.iloc[0, fs.columns.get_loc(fs.iloc[i, j])]
+
+    return sizes
 
 
+def calculate_total(sizes):
 
-    print(sizes)
-    print(fs)
+    # calculate the sum of all the sizes smaller than 100000
+    total = sizes[sizes <= 100000].sum().sum()
+
+    print(total)
 
 
-
-
-
-calculate_sizes(data_prep())
+calculate_total(calculate_folder(data_prep()))
+calculate_total(calculate_folder(data_prep(puzzle=True)))
