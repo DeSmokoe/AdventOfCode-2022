@@ -5,7 +5,7 @@ def readfile(puzzle=False):
     if puzzle:
         filename = "Puzzle.txt"
     else:
-        filename = "Test.txt"
+        filename = "Test2.txt"
     with open(filename, "r") as f:
         return f.read()
 
@@ -43,16 +43,16 @@ def move_tails(head, tails, positions):
 
 
 def move_tail(x_head, y_head, x_tail, y_tail, positions):
-    if x_head == x_tail + 2 and y_head == y_tail + 1 or y_head == y_tail + 2 and x_head == x_tail + 1:
+    if x_head == x_tail + 2 and y_head >= y_tail + 1 or y_head == y_tail + 2 and x_head >= x_tail + 1:
         x_tail += 1
         y_tail += 1
-    elif x_head == x_tail + 2 and y_head == y_tail - 1 or y_head == y_tail - 2 and x_head == x_tail + 1:
+    elif x_head == x_tail + 2 and y_head <= y_tail - 1 or y_head == y_tail - 2 and x_head >= x_tail + 1:
         x_tail += 1
         y_tail -= 1
-    elif x_head == x_tail - 2 and y_head == y_tail + 1 or y_head == y_tail + 2 and x_head == x_tail - 1:
+    elif x_head == x_tail - 2 and y_head >= y_tail + 1 or y_head == y_tail + 2 and x_head <= x_tail - 1:
         x_tail -= 1
         y_tail += 1
-    elif x_head == x_tail - 2 and y_head == y_tail - 1 or y_head == y_tail - 2 and x_head == x_tail - 1:
+    elif x_head == x_tail - 2 and y_head <= y_tail - 1 or y_head == y_tail - 2 and x_head <= x_tail - 1:
         x_tail -= 1
         y_tail -= 1
     elif x_head == x_tail + 2:
