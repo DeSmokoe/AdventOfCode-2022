@@ -1,6 +1,3 @@
-import pandas as pd
-
-
 def readfile(puzzle=False):
     if puzzle:
         filename = "Puzzle.txt"
@@ -34,15 +31,15 @@ def move_tails(head, tails, positions):
 
     for i in range(len(tails)):
         if i == 0:
-            tails[i] = move_tail(head[0], head[1], tails[i][0], tails[i][1], positions)
+            tails[i] = move_tail(head[0], head[1], tails[i][0], tails[i][1])
         else:
-            tails[i] = move_tail(tails[i-1][0], tails[i-1][1], tails[i][0], tails[i][1], positions)
+            tails[i] = move_tail(tails[i-1][0], tails[i-1][1], tails[i][0], tails[i][1])
 
     positions.append((tails[len(tails)-1][0], tails[len(tails)-1][1]))
     return tails
 
 
-def move_tail(x_head, y_head, x_tail, y_tail, positions):
+def move_tail(x_head, y_head, x_tail, y_tail):
     if x_head == x_tail + 2 and y_head >= y_tail + 1 or y_head == y_tail + 2 and x_head >= x_tail + 1:
         x_tail += 1
         y_tail += 1
